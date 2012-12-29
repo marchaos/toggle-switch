@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<script src="ToggleSwitch.js"></script>
+		<link rel="stylesheet" href="toggleswitch.css" />
+		<script>
+			var readyStateCheckInterval = setInterval(function() {
+			    if (document.readyState === "complete") {
+			    	clearInterval(readyStateCheckInterval);
+			        init();
+			    }
+			}, 10);
+
+			function init() {
+				var oToggle = new ToggleSwitch(document.getElementById('toggle'), "YES", "NO");			
+			}
+
+		</script>
+	</head>
+	<body>
+		<input id="toggle" type="checkbox" />
+	</body>
+</html>

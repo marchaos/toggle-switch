@@ -1,0 +1,61 @@
+.ts-track {
+	background: url('blue_track.png') -105px 0px no-repeat;
+	height: 54px;
+	width: 158px;
+	border-radius: 52px;
+	overflow: hidden;
+}
+
+.ts-track, .ts-track .ts-switch-container {
+	-webkit-transition:all 0.25s ease-in-out;
+    -moz-transition:all 0.25s ease-in-out;
+    -o-transition:all 0.25s ease-in-out;
+    transition:all 0.25s ease-in-out;
+}
+
+.ts-on-text, .ts-off-text {
+	text-shadow: 1px 1px 1px #666;
+	position: absolute;
+	font-size: 25px;
+	margin-top: 13px;
+	font-family: arial;
+	font-weight: bold;
+}
+
+.ts-on-text {
+	color: #FFF;
+	left: 0px;
+}
+
+.ts-off-text {
+	color: #7d7d7d;
+	right: 0px;
+}
+
+.ts-track .ts-switch-container {
+	position: relative;
+	margin-left: -56px;
+	width: 171px;
+}
+
+.ts-track.on .ts-switch-container {
+	 margin-left: 47px;
+}
+
+.ts-track .ts-switch {
+	background: url('switch.png') no-repeat;
+	height: 55px;
+	width: 55px;
+	position: absolute;
+	left: 37px;
+	display: inline-block;
+	margin: 0 18px;
+}
+
+.ts-track.on {
+	background-position: 0px 0px;
+}
+
+.ts-track input[type="checkbox"] {
+	display: none;
+}
