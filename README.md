@@ -11,7 +11,7 @@ A lightweight, zero dependency, toggle switch for modern browsers. Inspired by m
 ```html
 <html>
   <head>
-    <link ref="stylesheet" href="toggleswitch.min.css" />
+    <link rel="stylesheet" href="toggleswitch.min.css" />
     <script src="ToggleSwitch.min.js"></script>
   </head>
   <body>
