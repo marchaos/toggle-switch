@@ -36,4 +36,3 @@ alert("Switch is " + ((switch.isOn()) ? "on" : "off") + "!");
 #Kudos
 
 [Chris Brimmel's IOS 5 toggle switch images](http://dribbble.com/shots/216058-iOS-5-Toggle-Switches-iPhone-Retina)
-http://dribbble.com/shots/216058-iOS-5-Toggle-Switches-iPhone-Retina
