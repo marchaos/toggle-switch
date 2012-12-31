@@ -1,34 +1,62 @@
-var ToggleSwitch = function(eEl, sOnText, sOffText) 
+/**
+ * @constructor
+ */
+var ToggleSwitch = function(eCheckBox, sOnText, sOffText) 
 {
-	this.isOn = false;
-	this.eEl = eEl;
+	/**
+	 * @private
+	 */
+	this.eCheckBox = eCheckBox;
 
-	// Represents the track that the switch runs in
-	// this is the entire container element.
-	this.eTrack = document.createElement('div');
-	this.eTrack.className = 'ts-track';
-	this.eTrack.addEventListener('click', this.click.bind(this), false);
+	/**
+	 * @private 
+	 */
+	this._isOn = false;
 
-	// The switch knob.
-	this.eSwitch = document.createElement('span');
-	this.eSwitch.className = 'ts-switch';
+	/**
+	 * @private 
+	 */
+	this.isMouseDown = false;
 
-	this.eOnText = document.createElement('span');
-	this.eOnText.className = 'ts-on-text';
-	this.eOnText.appendChild(document.createTextNode(sOnText));
+	/**
+	 * @private
+	 */
+	this.isDragging = false;
 
-	this.eOffText = document.createElement('span');
-	this.eOffText.appendChild(document.createTextNode(sOffText));
-	this.eOffText.className = 'ts-off-text';
+	/**
+	 * Represents the track that the switch runs in this is the entire container element.
+	 * @private
+	 */
+	this.eTrack = this._createEl('div', 'ts-track');
 
-	// The container for the switch and the on and off text.
-	this.eSwitchContainer = document.createElement('div');
-	this.eSwitchContainer.className = 'ts-switch-container';
+	/**
+	 * The switch knob.
+	 * @private
+	 */
+	this.eSwitch = this._createEl('span', 'ts-switch');
+	
+	/**
+	 * @private
+	 */
+	this.eOnText = this._createTextElement(sOnText, 'ts-on-text');
+	
+	/**
+	 * @private
+	 */
+	this.eOffText = this._createTextElement(sOffText, 'ts-off-text');
+
+	/**
+	 * The container for the switch and the on and off text.
+	 * @private
+	 */
+	this.eSwitchContainer = this._createEl('div', 'ts-switch-container');
 	this.eSwitchContainer.appendChild(this.eOnText);
 	this.eSwitchContainer.appendChild(this.eSwitch);
 	this.eSwitchContainer.appendChild(this.eOffText);
 
 	this.eTrack.appendChild(this.eSwitchContainer);
+
+	this.eTrack.addEventListener('click', this._click.bind(this), false);
 
 	// Events for mobile devices
 	this.eSwitch.addEventListener('touchend', this._touchEnd.bind(this), false);
@@ -41,18 +69,73 @@ var ToggleSwitch = function(eEl, sOnText, sOffText)
 	document.addEventListener('mouseup', this._mouseUp.bind(this), false);
 
 	document.body.appendChild(this.eTrack);
-
-	this.eEl.parentNode.replaceChild(this.eTrack, this.eEl);
-	this.eTrack.appendChild(this.eEl);
-
-	this.isMouseDown = false;
-	this.isDragging = false;
+	this.eCheckBox.parentNode.replaceChild(this.eTrack, this.eCheckBox);
+	this.eTrack.appendChild(this.eCheckBox);
 };
 
 ToggleSwitch.prototype = 
 {
+	// -- Public Methods --
 
-	click: function(e)
+	/**
+	 * Returns TRUE if the switch is on, false otherwise.
+	 * @return {boolean}
+	 */
+	isOn: function()
+	{
+		return this._isOn;
+	},
+
+	/**
+	 * Switches the switch on.
+	 */
+	on: function()
+	{
+		this._switch(true);
+	},
+
+	/**
+	 * Switches the switch off.
+	 */
+	off: function()
+	{
+		this._switch(false);
+	},
+
+	/**
+	 * Toggle the switch to the opposite state.
+	 */
+	toggle: function()
+	{
+		(this._isOn) ? this.off() : this.on();
+	},
+
+	// -- Private Methods --
+
+	/**
+	 * @private
+	 */
+	_createEl: function(sType, sClassName)
+	{
+		var eEl = document.createElement(sType);
+		eEl.className = sClassName;
+		return eEl;
+	},
+
+	/**
+	 * @private
+	 */
+	_createTextElement: function(sText, sClassName)
+	{
+		var eEl = this._createEl('span', sClassName);
+		eEl.appendChild(document.createTextNode(sText));
+		return eEl;
+	},
+
+	/**
+	 * @private
+	 */
+	_click: function(e)
 	{
 		if (!this.isDragging)
 		{
@@ -62,12 +145,18 @@ ToggleSwitch.prototype =
 		this.isDragging = false;
 	},
 
+	/**
+	 * @private
+	 */
 	_mouseDown: function()
 	{
 		this._disableTransition();
 		this.isMouseDown = true;
 	},
 
+	/**
+	 * @private
+	 */
 	_mouseMove: function(e)
 	{
 		if (this.isMouseDown)
@@ -77,6 +166,9 @@ ToggleSwitch.prototype =
 		}
 	},
 
+	/**
+	 * @private
+	 */
 	_mouseUp: function(e)
 	{
 		if (this.isDragging)
@@ -85,6 +177,9 @@ ToggleSwitch.prototype =
 		}
 	},
 
+	/**
+	 * @private
+	 */
 	_touchStart: function(e)
 	{
 		this._disableTransition();
@@ -92,6 +187,9 @@ ToggleSwitch.prototype =
 		e.preventDefault(); 
 	},
 
+	/**
+	 * @private
+	 */
 	_touchMove: function(e)
 	{
 		if (e.touches.length == 1)
@@ -100,18 +198,27 @@ ToggleSwitch.prototype =
 		}
 	},
 
+	/**
+	 * @private
+	 */
 	_convertCoordToMarginLeft: function(nCoordX)
 	{
-		var left = this.getPosition(this.eTrack).left;
+		var left = this._getPosition(this.eTrack).left;
 		return nCoordX - left - (-this._getMinContainerMarginLeft()) - (this.eSwitch.offsetWidth / 2);
 	},
 
+	/**
+	 * @private
+	 */
 	_convertCoordToBackgroundPosition: function(nCoordX)
 	{
-		var left = this.getPosition(this.eTrack).left;
+		var left = this._getPosition(this.eTrack).left;
 		return nCoordX - left - (-this._getMinTrackBackgroundX()) - (this.eSwitch.offsetWidth / 2);
 	},
 
+	/**
+	 * @private
+	 */
 	_pointerMove: function(e, nCoordX, bPreventDefault)
 	{
 		var nPos = this._convertCoordToMarginLeft(nCoordX);
@@ -140,87 +247,96 @@ ToggleSwitch.prototype =
 		}
 	},
 
+	/**
+	 * @private
+	 */
 	_touchEnd: function(e)
 	{
 		this._snapSwitch();	
 	},
 
+	/**
+	 * @private
+	 */
 	_disableTransition: function()
 	{
-		this.addClass(this.eTrack, 'no-transition');
+		this._addClass(this.eTrack, 'no-transition');
 	},
 
+	/**
+	 * @private
+	 */
 	_enableTransition: function()
 	{
-		this.removeClass(this.eTrack, 'no-transition');
+		this._removeClass(this.eTrack, 'no-transition');
 	},
 
+	/**
+	 * @private
+	 */
 	_getOccupiedSpaceBeforeSwitch: function()
 	{
 		return this.eOnText.clientWidth +
-			(this.getPosition(this.eSwitch).left - this.getPosition(this.eOnText).left - this.eOnText.clientWidth);
+			(this._getPosition(this.eSwitch).left - this._getPosition(this.eOnText).left - this.eOnText.clientWidth);
 	},
 
+	/**
+	 * @private
+	 */
 	_getMaxContainerMarginLeft: function()
 	{
 		return this.eTrack.clientWidth - this.eSwitch.offsetWidth - this._getOccupiedSpaceBeforeSwitch();
 	},
 
+	/**
+	 * @private
+	 */
 	_getMinContainerMarginLeft: function() 
 	{
 		return 0 - this._getOccupiedSpaceBeforeSwitch() - 1;
 	},
 
+	/**
+	 * @private
+	 */
 	_getMinTrackBackgroundX: function()
 	{
 		return -this.eTrack.offsetWidth + this.eSwitch.offsetWidth - 1;
 	},
 
+	/**
+	 * @private
+	 */
 	_snapSwitch: function()
 	{
-		var pos = parseInt(this.eSwitchContainer.style.marginLeft);
+		var pos = parseInt(this.eSwitchContainer.style.marginLeft, 0);
 		var max = this._getMaxContainerMarginLeft();
 		var min = this._getMinContainerMarginLeft();
 		var middle = (max + min) / 2;
 		(pos > middle) ? this.on() : this.off();
 	},
 
-	isOn: function()
+	/**
+	 * @private
+	 */
+	_switch: function(bEnabled)
 	{
-		return this.isOn;
-	},
-
-	on: function()
-	{
-		this.isOn = true;
+		this._isOn = bEnabled;
 		this._enableTransition();
-		this.eSwitchContainer.style.marginLeft = this._getMaxContainerMarginLeft() + "px";
-		this.eTrack.style.backgroundPosition = "0px 0px";
-	},
 
-	off: function()
-	{
-		this.isOn = false;
-		this._enableTransition();
-		this.eSwitchContainer.style.marginLeft = this._getMinContainerMarginLeft() + "px";
-		this.eTrack.style.backgroundPosition = this._getMinTrackBackgroundX() + "px 0px";
-	},
-
-	toggle: function()
-	{
-		(this.isOn) ? this.off() : this.on();
+		var nMargin = (bEnabled) ? this._getMaxContainerMarginLeft() : this._getMinContainerMarginLeft();
+		var nBackgroundPos = (bEnabled) ? 0 : this._getMinTrackBackgroundX();
+		this.eSwitchContainer.style.marginLeft = nMargin + "px";
+		this.eTrack.style.backgroundPosition = nBackgroundPos + "px 0px";
+		this.eCheckBox.setAttribute('checked', (bEnabled) ? 'checked' : '');
 	},
 
 	// -- UTILITY METHODS --
- 	
-	toggleClass: function(eEl, sClass)
-	{
-		(new RegExp('\\b' + sClass + '\\b').test(eEl.className)) 
-			? this.removeClass(eEl, sClass) : this.addClass(eEl, sClass);
-		return this;
-	},
 
-	getPosition: function(eEl)
+	/**
+	 * @private
+	 */
+	_getPosition: function(eEl)
 	{
 		var curleft = curtop = 0;
 		if (eEl.offsetParent) 
@@ -234,21 +350,26 @@ ToggleSwitch.prototype =
 		return {left: curleft, top: curtop};
 	},
 
-	replaceClass: function(eEl, sOldClass, sNewClass) 
-	{
-		this.removeClass(eEl, sOldClass).addClass(eEl, sNewClass);
-	},
-
-	removeClass: function(eEl, sClass)
+	/**
+	 * @private
+	 */
+	_removeClass: function(eEl, sClass)
 	{
 		eEl.className = eEl.className.replace(new RegExp('(\\b' + sClass + '\\b)'), '').trim();
-		return this;
 	},
 
-	addClass: function(eEl, sClass)
+	/**
+	 * @private
+	 */
+	_addClass: function(eEl, sClass)
 	{
-		this.removeClass(eEl, sClass);
+		this._removeClass(eEl, sClass);
 		eEl.className += ' ' + sClass;
-		return this;
 	}
 };
+
+window['ToggleSwitch'] = ToggleSwitch;
+ToggleSwitch.prototype['on'] = ToggleSwitch.prototype.on;
+ToggleSwitch.prototype['isOn'] = ToggleSwitch.prototype.isOn;
+ToggleSwitch.prototype['off'] = ToggleSwitch.prototype.off;
+ToggleSwitch.prototype['toggle'] = ToggleSwitch.prototype.toggle;
