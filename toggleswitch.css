@@ -1,16 +1,23 @@
 .ts-track {
-	background: url('blue_track.png') -105px 0px no-repeat;
+	background: url('blue_track2.png') -102px 0px no-repeat;
 	height: 54px;
-	width: 158px;
+	width: 156px;
 	border-radius: 52px;
 	overflow: hidden;
 }
 
 .ts-track, .ts-track .ts-switch-container {
-	-webkit-transition:all 0.25s ease-in-out;
-    -moz-transition:all 0.25s ease-in-out;
-    -o-transition:all 0.25s ease-in-out;
-    transition:all 0.25s ease-in-out;
+	-webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+}
+
+.ts-track.no-transition, .ts-track.no-transition .ts-switch-container {
+	-webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
 }
 
 .ts-on-text, .ts-off-text {

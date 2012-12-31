@@ -1,7 +1,20 @@
 <html>
 	<head>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 		<script src="ToggleSwitch.js"></script>
 		<link rel="stylesheet" href="toggleswitch.css" />
+		<style>
+			html, body {
+			   -moz-user-select: -moz-none;
+			   -khtml-user-select: none;
+			   -webkit-user-select: none;
+			}
+
+			.ts-track {
+				margin-left: 400px;
+			}
+		</style>
 		<script>
 			var readyStateCheckInterval = setInterval(function() {
 			    if (document.readyState === "complete") {
