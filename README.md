@@ -2,6 +2,7 @@
 
 A lightweight, zero dependency, toggle switch for modern browsers. Inspired by mobile toggle switches.
 
+* 2.5kB compressed JavaScript, 1kB compressed CSS
 * Supports mobile devices (swipe and click)
 * Supports desktop (drag and click)
 
