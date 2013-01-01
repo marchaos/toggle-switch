@@ -15,7 +15,7 @@ A lightweight, zero dependency, toggle switch for modern browsers. Inspired by m
     <script src="ToggleSwitch.min.js"></script>
   </head>
   <body>
-    <input id="cb" type="checkbox" />
+    <input class="small blue" id="cb" type="checkbox" />
   </body>
 </html>
 ```
