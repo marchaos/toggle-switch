@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>HTML 5 toggle-switch by marchaos</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.0/build/cssreset/cssreset-min.css">
+
+    <link rel="stylesheet" href="../stylesheets/styles.css" />
+    <link rel="stylesheet" href="../stylesheets/font-awesome.css" />
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/toggleswitch.min.css" />
+    <script src="ToggleSwitch.min.js"></script>
+
+    <link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify/prettify.js"></script>
+
+   
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+      var readyStateCheckInterval = setInterval(function() {
+          if (document.readyState === "complete") {
+            clearInterval(readyStateCheckInterval);
+              init();
+          }
+      }, 10);
+
+      function init() {
+        var tSwitch = new ToggleSwitch(document.getElementById('toggle'), "ON", "OFF");
+        setTimeout(function() {
+          tSwitch.on();
+        }, 1000);
+      }
+
+    </script>
+    <style>
+      pre.prettyprint {
+        border: 1px solid #E5E5E5;
+        padding: 10px;
+      }
+
+      .clear {
+        clear:both;
+      }
+      
+      dl dd, dl dt {
+        float: left;
+        margin: 2px;
+      }
+      
+      dl dt {
+        clear: both;
+        padding: 4px;
+        width: 150px;
+       background-color: #EBEBEB;
+      }
+
+      input[type="checkbox"].ts-switch {
+        display: none;
+      }
+
+      .features-list {
+        list-style-type: none;
+        padding-left: 3px;
+      }
+      
+      .features-list i {
+        margin-right: 5px;
+      }
+    
+    </style>
+  </head>
+  <body onload="prettyPrint()">
+    <a href="https://github.com/marchaos/toggle-switch"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
+
+
+    <div class="wrapper">
+      <header>
+        <h1>Toggle Switch</h1>
+        <input class="ts-switch blue small" id="toggle" type="checkbox" />
+        <p> </p>
+      </header>
+      <section>
+
+        <h3>Features</h3>
+
+  <ul class="features-list">
+    <li><i class="icon-ok"></i>Lightweight - <strong>2.5kB minified JS</strong>, <strong>1.5kB minified CSS</strong> </li>
+    <li><i class="icon-ok"></i>Dependency free</li>
+    <li><i class="icon-ok"></i>Works with mobile browsers, including swiping support</li>
+    <li><i class="icon-ok"></i>Chrome, Firefox, Safari</li>
+  </ul>
+
+<h3>Usage</h3>
+
+<p>Toggle Switches utilise a checkbox element defined in HTML. The class attribute defines how the toggle switch will be displayed (combinations are <em>"blue"</em>, <em>"orange"</em>, <em>"blue small"</em>, <em>"orange small"</em>)</p>
+
+<pre class="prettyprint">&lt;input type="checkbox" class="blue small" id="toggle" /&gt;
+</pre>
+
+<p>The <code>ToggleSwitch</code> class accepts the checkbox element along with the <em>on</em> and <em>off</em> text, like so:</p>
+
+<pre class="prettyprint"><code>var checkbox = document.getElementById('toggle');
+var switch = new ToggleSwitch(checkbox, 'ON', 'OFF');
+switch.on();
+</code></pre>
+
+<h3>Source Code</h3>
+
+<p>
+  <div><i class="icon-github"></i> <a href="https://github.com/marchaos/toggle-switch">GitHub Repository</a></div>
+  <div><i class="icon-folder-close"></i> <a href="https://github.com/marchaos/toggle-switch/archive/master.zip">Download Zip</a></div>
+</p>
+
+    <script src="../javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
