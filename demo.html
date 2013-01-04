@@ -3,8 +3,8 @@
 	<head>
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<script src="ToggleSwitch.min.js"></script>
-		<link rel="stylesheet" href="css/toggleswitch.min.css" />
+		<script src="ToggleSwitch.js"></script>
+		<link rel="stylesheet" href="css/toggleswitch.css" />
 		<style>
 			html, body {
 			   -moz-user-select: -moz-none;
@@ -14,7 +14,6 @@
 
 			.ts-track {
 				margin-left: 30px;
-				margin: 10px;
 			}
 		</style>
 		<script>
@@ -29,13 +28,21 @@
 				var oSmallToggle = new ToggleSwitch(document.getElementById('toggle'), "ON", "OFF");
 				var oSmallOrangeToggle = new ToggleSwitch(document.getElementById('toggle2'), "YES", "NO");
 				var oBlueToggle = new ToggleSwitch(document.getElementById('toggle3'), "YES", "NO");
-				var oOrangeToggle = new ToggleSwitch(document.getElementById('toggle4'), "ON", "OFF");			
+				var oOrangeToggle = new ToggleSwitch(document.getElementById('toggle4'), "ON", "OFF");		
+
+				oSmallToggle.addListener(function(bEnabled) {
+					oBlueToggle.toggle();
+				});
+
+				oSmallOrangeToggle.addListener(function(bEnabled) {
+					(bEnabled) ? oOrangeToggle.on() : oOrangeToggle.off();
+				});
 			}
 
 		</script>
 	</head>
 	<body>
-		<input class="blue small" id="toggle" type="checkbox" />
+		<input class="blue small" checked="checked" id="toggle" type="checkbox" />
 		<input class="orange small" id="toggle2" type="checkbox" />
 		<input class="blue" id="toggle3" type="checkbox" />
 		<input class="orange" id="toggle4" type="checkbox" />
