@@ -6,6 +6,8 @@ A lightweight, zero dependency, toggle switch for modern browsers. Inspired by m
 * Supports mobile devices (swipe and click)
 * Supports desktop (drag and click)
 
+See http://marchaos.github.com/toggle-switch for a demo. 
+
 # Embedding
 
 ```html
