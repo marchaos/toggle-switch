@@ -167,6 +167,8 @@
 			{
 				this._snapSwitch();
 			}
+			
+                        this._isMouseDown = false; // cca
 		},
 
 		/**
