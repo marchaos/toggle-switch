@@ -65,9 +65,14 @@
 	ToggleSwitch.prototype = 
 	{
 		/**
-		 * @private 
-		 */
-		_isOn: false,
+                 * @private 
+                 */
+                _isOn: false,
+                
+                /**
+                 * @private 
+                 */
+                _previousState: false,
 
 		/**
 		 * @private 
@@ -314,22 +319,26 @@
 		/**
 		 * @private
 		 */
-		_switch: function(bEnabled, bDisableTransition)
-		{
-			this._isOn = bEnabled;
-			if (!bDisableTransition)
-			{
-				this._enableTransition();	
-			}
+                _switch: function(bEnabled, bDisableTransition)
+                {
+                        this._isOn = bEnabled;
+                        if (!bDisableTransition)
+                        {
+                                this._enableTransition();       
+                        }
 
-			var nMargin = (bEnabled) ? this._getMaxContainerMarginLeft() : this._getMinContainerMarginLeft();
-			var nBackgroundPos = (bEnabled) ? 0 : this._getMinTrackBackgroundX();
-			this.eSwitchContainer.style.marginLeft = nMargin + "px";
-			this.eTrack.style.backgroundPosition = nBackgroundPos + "px 0px";
-			(bEnabled) ? this.eCheckBox.setAttribute('checked', 'checked') : this.eCheckBox.removeAttribute('checked');
-			if (this.fCallback) this.fCallback(bEnabled);
-		},
-
+                        var nMargin = (bEnabled) ? this._getMaxContainerMarginLeft() : this._getMinContainerMarginLeft();
+                        var nBackgroundPos = (bEnabled) ? 0 : this._getMinTrackBackgroundX();
+                        this.eSwitchContainer.style.marginLeft = nMargin + "px";
+                        this.eTrack.style.backgroundPosition = nBackgroundPos + "px 0px";
+                        (bEnabled) ? this.eCheckBox.setAttribute('checked', 'checked') : this.eCheckBox.removeAttribute('checked');
+                        if (this._isOn !== this._previousState)
+                        {
+                            if (this.fCallback) this.fCallback(bEnabled);
+                        }
+                        this._previousState = this._isOn; 
+                        
+                },
 		// -- UTILITY METHODS --
 
 		/**
