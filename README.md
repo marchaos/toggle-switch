@@ -32,7 +32,12 @@ switch.on();
 switch.off();
 // toggle on
 switch.toggle();
+// switch disable
+switch.disable();
+// switch enable
+switch.enable();
 alert("Switch is " + ((switch.isOn()) ? "on" : "off") + "!");
+alert("Switch is " + ((switch.isDisabled()) ? "disabled" : "enabled") + "!");
 ```
 
 #Kudos

@@ -28,7 +28,9 @@
 				var oSmallToggle = new ToggleSwitch(document.getElementById('toggle'), "ON", "OFF");
 				var oSmallOrangeToggle = new ToggleSwitch(document.getElementById('toggle2'), "YES", "NO");
 				var oBlueToggle = new ToggleSwitch(document.getElementById('toggle3'), "YES", "NO");
-				var oOrangeToggle = new ToggleSwitch(document.getElementById('toggle4'), "ON", "OFF");		
+				var oOrangeToggle = new ToggleSwitch(document.getElementById('toggle4'), "ON", "OFF");	
+				var oSmallToggleDisable = new ToggleSwitch(document.getElementById('toggleDisable'), "ON", "OFF");
+				var oBlueToggleDisable = new ToggleSwitch(document.getElementById('toggleDisable2'), "ON", "OFF");
 
 				oSmallToggle.addListener(function(bEnabled) {
 					oBlueToggle.toggle();
@@ -37,6 +39,18 @@
 				oSmallOrangeToggle.addListener(function(bEnabled) {
 					(bEnabled) ? oOrangeToggle.on() : oOrangeToggle.off();
 				});
+				
+				oSmallToggleDisable.addListener(function(bEnabled) {
+				
+					if(oBlueToggleDisable.isDisabled())
+						oBlueToggleDisable.enable();
+					else
+						oBlueToggleDisable.disable();
+				});
+			    oBlueToggleDisable.addListenerTryChangeDisable(function() {
+			        alert("Try change disabled");
+			    });
+
 			}
 
 		</script>
@@ -46,5 +60,7 @@
 		<input class="orange small" id="toggle2" type="checkbox" />
 		<input class="blue" id="toggle3" type="checkbox" />
 		<input class="orange" id="toggle4" type="checkbox" />
+		<input class="blue small" checked="checked" id="toggleDisable" type="checkbox" />
+		<input class="blue" id="toggleDisable2" type="checkbox" />	
 	</body>
 </html>

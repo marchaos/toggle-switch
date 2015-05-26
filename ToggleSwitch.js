@@ -84,6 +84,11 @@
 		 */
 		_isDragging: false,
 
+		/**
+		 * @private
+		 */
+        _isDisabled: false,
+
 		// -- Public Methods --
 
 		/**
@@ -125,6 +130,38 @@
 		addListener: function(fCallback)
 		{
 			this.fCallback = fCallback;
+		},
+		
+	    /**
+		 * Adds a listener to listen try changes with switch disabled
+		 */
+		addListenerTryChangeDisable: function (fCallbackTryChangeDisable) {
+		    this.fCallbackTryChangeDisable = fCallbackTryChangeDisable;
+		},
+
+		/**
+		 * Returns TRUE if the switch is disabled, false otherwise.
+		 * @return {boolean}
+		 */
+		isDisabled: function()
+		{
+			return this._isDisabled;
+		},
+
+		/**
+		 * Switches the switch to enable.
+		 */
+		enable: function()
+		{
+			this._switchDisable(false);
+		},
+
+		/**
+		 * Switches the switch to disable.
+		 */
+		disable: function()
+		{
+			this._switchDisable(true);
 		},
 
 		// -- Private Methods --
@@ -321,6 +358,8 @@
 		 */
                 _switch: function(bEnabled, bDisableTransition)
                 {
+                    if (!this._isDisabled)
+                    {
                         this._isOn = bEnabled;
                         if (!bDisableTransition)
                         {
@@ -337,7 +376,21 @@
                             if (this.fCallback) this.fCallback(bEnabled);
                         }
                         this._previousState = this._isOn; 
+                    } else
+                    {
+                        if (this.fCallbackTryChangeDisable)
+                            this.fCallbackTryChangeDisable();
+                    }
                         
+                },
+
+                _switchDisable: function (bEnabled) {
+                    this._isDisabled = bEnabled;
+                    
+                    if(bEnabled) 
+                        this.eSwitchContainer.style.opacity = 0.4;
+                    else
+                        this.eSwitchContainer.style.opacity = 1;
                 },
 		// -- UTILITY METHODS --
 
@@ -383,4 +436,7 @@
 	window['ToggleSwitch'].prototype['isOn'] = ToggleSwitch.prototype.isOn;
 	window['ToggleSwitch'].prototype['off'] = ToggleSwitch.prototype.off;
 	window['ToggleSwitch'].prototype['toggle'] = ToggleSwitch.prototype.toggle;
+	window['ToggleSwitch'].prototype['enabled'] = ToggleSwitch.prototype.enabled;
+	window['ToggleSwitch'].prototype['isDisabled'] = ToggleSwitch.prototype.isDisabled;
+	window['ToggleSwitch'].prototype['disabled'] = ToggleSwitch.prototype.disabled;
 })();
